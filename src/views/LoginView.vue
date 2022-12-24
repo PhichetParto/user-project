@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { VForm } from "vuetify/components";
-const emit = defineEmits<{
-  (e: "login", username: String): void;
-}>();
+import { useLoginStore } from "@/stores/login";
+const loginStore = useLoginStore();
+
 const loginname = ref("");
 const password = ref("");
 const valid = ref(true);
@@ -11,7 +11,7 @@ const form = ref<InstanceType<typeof VForm> | null>(null);
 const login = async () => {
   const { valid } = await form.value!.validate();
   if (valid) {
-    emit("login", loginname.value);
+    loginStore.login(loginname.value);
   }
 };
 const reset = () => {

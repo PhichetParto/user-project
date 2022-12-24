@@ -7,17 +7,16 @@ import {
   mdiAccountMultiple,
   mdiStar,
 } from "@mdi/js";
+import { useLoginStore } from "@/stores/login";
+const loginStore = useLoginStore();
 
 const theme = ref("light");
-const emit = defineEmits<{
-  (e: "logout"): void;
-}>();
 
 function onClick() {
   theme.value = theme.value === "light" ? "dark" : "light";
 }
 const logout = () => {
-  emit("logout");
+  loginStore.logout();
 };
 </script>
 <template>
@@ -32,11 +31,11 @@ const logout = () => {
       >
       <v-btn @click="logout">logout</v-btn>
     </v-app-bar>
-    <v-navigation-drawer expand-on-hover rail>
+    <v-navigation-drawer expand-on-hover rail permanent>
       <v-list>
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-          title="Sandra Adams"
+          :title="loginStore.loginname"
           subtitle="sandra_a88@gmailcom"
         ></v-list-item>
       </v-list>
