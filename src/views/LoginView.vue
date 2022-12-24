@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { VForm } from "vuetify/components";
+const emit = defineEmits<{
+  (e: "login", username: String): void;
+}>();
 const loginname = ref("");
 const password = ref("");
 const valid = ref(true);
@@ -8,7 +11,7 @@ const form = ref<InstanceType<typeof VForm> | null>(null);
 const login = async () => {
   const { valid } = await form.value!.validate();
   if (valid) {
-    console.log("Form Success");
+    emit("login", loginname.value);
   }
 };
 const reset = () => {
@@ -53,10 +56,6 @@ const reset = () => {
               required
             ></v-text-field>
           </v-form>
-          <pre>
-            {{ loginname }}
-            {{ password }}
-          </pre>
         </v-card-text>
         <v-card-actions class="justify-center">
           <v-btn color="success" @click="login">Login</v-btn>

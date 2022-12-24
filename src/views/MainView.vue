@@ -9,10 +9,16 @@ import {
 } from "@mdi/js";
 
 const theme = ref("light");
+const emit = defineEmits<{
+  (e: "logout"): void;
+}>();
 
 function onClick() {
   theme.value = theme.value === "light" ? "dark" : "light";
 }
+const logout = () => {
+  emit("logout");
+};
 </script>
 <template>
   <v-app :theme="theme">
@@ -24,6 +30,7 @@ function onClick() {
         @click="onClick"
         >Toggle Theme</v-btn
       >
+      <v-btn @click="logout">logout</v-btn>
     </v-app-bar>
     <v-navigation-drawer expand-on-hover rail>
       <v-list>
